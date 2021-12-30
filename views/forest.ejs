@@ -10,12 +10,16 @@
 <body>
     <h1>The Forest</h1>
     <% if (!fire) { %> 
-        <p>The path into the forest is not especially well traveled, and only a few steps in you find yourself pushing through brambles to move forward. After some tiring work and a few minor scratches, you find youself at a clearing.</p> <br/>
-        <p>In front of you is a small camp with a modest fire. Two men sit nearby - a large, wel-armored knight, and a younger man who looks to be his squire.</p> <br/>
+        <p>The path into the forest is not especially well traveled, and in only a few steps you find yourself pushing through brambles to move forward. After some tiring work and a few minor scratches, you find youself at a clearing.</p> <br/>
+        <p>In front of you is a small camp with a modest fire. Two men sit nearby - a large, well-armored knight, and a younger man who looks to be his squire.</p> <br/>
         <% if (!met_knight) { %>
             <p>The knight grumbles something in a language you don't understand, and his squire translates: "Well met, outlander. Sir Bearington and I were just settling down for a meal. Perhaps you'll join us?"</p> <br/>
         <% } else { %>
-            <p>Sir Bearington grumbles a welcome, and his squire translates: "Welcome back, outlander. How goes your quest?" </p> <br/>
+            <% if (location === "forest") { %> 
+                <p>Sir Bearington and his squire are quiet for a moment, gazing into the campfire.</p>
+            <% } else { %>
+                <p>Sir Bearington grumbles a welcome, and his squire translates: "Welcome back, outlander. How goes your quest?" </p> <br/>
+            <% } %>
         <% } %>
     <% } else { %>
         <p>The path to Sir Bearington's camp is much easier now that all of the brambles have been burned away. It doesn't take you long at all to find yourself face-to-face with the knight and his squire once again. They look annoyed.</p> <br/>

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3111;
+const port = 8080;
 
 let location = "crossroads";
 let fire = false;
