@@ -9,12 +9,29 @@
 </head>
 <body>
     <h1>The Forest</h1>
-    <p>After a long journey, you find yourself at a crossroads. Four paths appear before you:</p> <br/>
-    <a href="/garden">North, to the Dreaded Garden</a><br/>
-    <a href="/forest">West, to the Doomed Forest</a><br/>
-    <a href="/swamp">East, to the Damned Swamp</a><br/>
-    <a href="/exit">South, back the way you came</a><br/>
+    <% if (!fire) { %> 
+        <p>The path into the forest is not especially well traveled, and only a few steps in you find yourself pushing through brambles to move forward. After some tiring work and a few minor scratches, you find youself at a clearing.</p> <br/>
+        <p>In front of you is a small camp with a modest fire. Two men sit nearby - a large, wel-armored knight, and a younger man who looks to be his squire.</p> <br/>
+        <% if (!met_knight) { %>
+            <p>The knight grumbles something in a language you don't understand, and his squire translates: "Well met, outlander. Sir Bearington and I were just settling down for a meal. Perhaps you'll join us?"</p> <br/>
+        <% } else { %>
+            <p>Sir Bearington grumbles a welcome, and his squire translates: "Welcome back, outlander. How goes your quest?" </p> <br/>
+        <% } %>
+    <% } else { %>
+        <p>The path to Sir Bearington's camp is much easier now that all of the brambles have been burned away. It doesn't take you long at all to find yourself face-to-face with the knight and his squire once again. They look annoyed.</p> <br/>
+    <% } %>
 
-    <p>You are playing Gazort! <a href="/home">Reset game</a></p>
+
+    <% if (!has_key) { %> 
+        <a href="/forest/talk">"Thank you for the offer, but I am on a glorious quest! Perhaps you know something of the beast I hunt?"</a><br/>
+    <% } %>
+
+    <% if (!has_torch) { %> 
+        <a href="/forest/cook">"What a generous offer! My journey has been long, and a meal would be most appreciated."</a><br/>
+    <% } %>
+
+    <a href="/">"Thank you for your hospitality, but my quest awaits"</a><br/>
+
+    <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
 </body>
 </html>

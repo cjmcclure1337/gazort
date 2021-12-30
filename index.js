@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3111;
 
+let location = "crossroads";
 let fire = false;
+let met_knight = false;
 let gate_unlocked = false;
 let gate_smashed = false;
 let has_torch = false;
@@ -17,6 +19,15 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
     res.render("crossroads");
+    location = "crosroads";
+}); 
+
+app.get('/reset', (req, res) => {
+    //TBD reset all variables and restart game
+}); 
+
+app.get('/exit', (req, res) => {
+    //TBD giving up page
 }); 
 
 app.get('/fight/bow', (req, res) => {
@@ -32,12 +43,21 @@ app.get('/fight', (req, res) => {
     res.render("fight", {has_bow, has_torch, loud:false});
 }); 
 
-app.get('/forrest', (req, res) => {
-    res.render("forrest", {fire, has_torch, has_key});
+app.get('/forest', (req, res) => {
+    res.render("forest", {fire, met_knight, has_torch, has_key, location});
+    location = "forest";
 })
+app.get('/forest/talk', (req, res) => {
+    //TBD chat with Sir Bearington and find the key
+})
+app.get('/forest/cook', (req, res) => {
+    //TBD try to roast a marshmallow and burn down the forest
+})
+
 
 app.get('/gate', (req, res) => {
     res.render("gate", {has_log, has_key, gate_unlocked, gate_smashed});
+    location = "garden";
 }); 
 
 app.get('/garden/smash', (req, res) => {
@@ -47,6 +67,10 @@ app.get('/garden/smash', (req, res) => {
 app.get('/garden/key', (req, res) => {
     gate_unlocked = true;
     res.render("garden");
+}); 
+
+app.get('/swamp', (req, res) => {
+    //TBD swamp path
 }); 
 
 
