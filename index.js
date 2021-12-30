@@ -47,16 +47,21 @@ app.get('/fight', (req, res) => {
     res.render("fight", {has_bow, has_torch, loud:false});
 }); 
 
-app.get('/forest', (req, res) => {
-    res.render("forest", {fire, met_knight, has_torch, has_key, location});
-    location = "forest";
-})
 app.get('/forest/talk', (req, res) => {
-    //TBD chat with Sir Bearington and find the key
+    if(req.query.answer === "river") {
+        has_key = true;
+    }
+    res.render("talk", {stage:req.query.answer})
 })
 app.get('/forest/cook', (req, res) => {
     //TBD try to roast a marshmallow and burn down the forest
 })
+app.get('/forest', (req, res) => {
+    res.render("forest", {fire, met_knight, has_torch, has_key, location});
+    location = "forest";
+    met_knight = true;
+})
+
 
 
 app.get('/gate', (req, res) => {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    <h1>Campfire Conversation</h1>
+    <% if (stage === "riddle") { %> 
+        <p>Sir Bearington looks alarmed and lets out an exclaimation you don't understand. He turns to his squire and continues his muttering for a moment. The squire nods solemnly, and turns back to you.</p> <br/>
+        <p>"My lord says that the beast of the garden is not one to be trifled with. He advises that you turn back from this path, as there is no glory in death"</p> <br/>
+        <p>The flame sputters as you study each other. The knight and his squire seem to notice the resolve in your eyes, though, and after a pause Sir Bearington continues.</p> <br/>
+        <p>"Very well," the squire continues. "My lord has an article that may assist with you endeavor - a key to the garden that may allow you to approach the creature with stealth. However, he first asks that you pass a test of spirit.</p>
+        <p>"What's more, in order to see more clearly into your heart and know that he is not sending you to a certain death, Sir Bearington has asked that I not intervene in your test."</p>
+        <p>Sir Bearington grumbles his aknowledgement, then mutters somethign that you (still) can't understand. The two men seem to be looking to you for a response.</p>
+    <% } else if (stage === "river") { %> 
+        <p>Sir Bearington smiles and pulls something out of a pouch on his belt. A remarkably hairy hand reaches toward you with a small, silver key. You take it and put it in your pocket.</p>
+        <p>The squire speaks once more: "Now that you have proven your wisdom, as well as your courage, we no longer fear for yoy in your encounter with the beast. Please, stay and rest for as long as you feel you need."</p>
+    <% } else if (stage === "dragon") { %> 
+        <p>Sir Bearington shakes his head in disappointment.</p>
+        <p>The squire leans toward you and whispers: "Not every problem can be solves by felling a fearsome foe, outlander. But I don't think my lord would mind giving you a second chance."</p>
+    <% } else if (stage === "wits") { %> 
+        <p>Sir Bearington and his squire at you quizically - apparently this was not a response they were expecting. Sir Bearington repeats his indecipherable riddle, as though perhaps you misheard.</p>
+    <% } %>   
+
+
+    <% if (stage !== "dragon" && stage !== "river") { %> 
+        <a href="/forest/talk/?answer=dragon">"A mighty dragon!"</a><br/>
+    <% } %>
+    <% if (stage !== "wits" && stage !== "river") { %> 
+        <a href="/forest/talk/?answer=wits">""</a><br/>
+    <% } %>
+    <% if (stage !== "river") { %> 
+        <a href="/forest/talk/?answer=river">"..A river?"</a><br/>
+        <a href="/forest">"Allow me to ponder this, and perhaps I shall ask again later."</a><br/>
+    <% } else { %>
+        <a href="/forest">"Thank you for this gift, good knight. You are a true friend."</a><br/>
+    <% } %>
+
+
+    <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+</body>
+</html>
