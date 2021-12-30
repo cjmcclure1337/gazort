@@ -26,6 +26,10 @@ app.get('/reset', (req, res) => {
     //TBD reset all variables and restart game
 }); 
 
+app.get('/about', (req, res) => {
+    //TBD info page
+}); 
+
 app.get('/exit', (req, res) => {
     //TBD giving up page
 }); 
