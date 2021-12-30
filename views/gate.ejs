@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    <h1>The Garden Gate</h1>
+    <% if (gate_smashed) { %> 
+        <p>The wreckage of the gate lies before you. You really did a number on it.</p> <br/>
+    <% }  else if(gate_unlocked) { %>
+        <p>The open gate lies before you once again. You hear the snores of the beast within. Are you ready?</p> <br/>
+    <% } else { %>
+        <p>A locked gate, mighty and iron, appears before you. Beyond it you hear the snores of a great beast. </p> <br/>
+    <% } %>
+
+    <a href="/">I return to the crossroads.</a><br/>
+
+    <% if (has_log && !gate_smashed && !gate_unlocked) { %> 
+        <a href="/garden/smash">This gate is no match for my log! I smash through the gate.</a><br/>
+    <% } %>
+
+    <% if (has_key && !gate_smashed && !gate_unlocked) { %> 
+        <a href="/garden/key">Perhaps this key I found will open the gate.</a><br/>
+    <% } %>
+
+    <% if (gate_smashed || gate_unlocked) { %> 
+        <a href="/fight">I am ready to enter the garden</a><br/>
+    <% } %>
+    
+
+    <p>You are playing Gazort! <a href="/home">Reset game</a></p>
+</body>
+</html>

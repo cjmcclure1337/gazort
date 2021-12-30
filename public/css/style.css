@@ -1,0 +1,19 @@
+@font-face {
+    font-family: lunchtimeds;
+    src: url(lunchds.ttf);
+}
+
+body {
+    background-color:black;
+    color: white;
+    font-family: lunchtimeds
+}
+
+a {
+    line-height: 130%;
+    text-decoration: none;
+}
+
+a:visited {
+    color:blueviolet;
+}

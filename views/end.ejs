@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    
+    <% if (ending === "bow") { %>
+        <h1>Victory!</h1> 
+        <p>As the beast charges toward you, you quickly dip an arrow into the fire of your torch and fire it into the beast. The Gazebo howls in pain as the flame engulfs it.</p> <br/>
+        <p>As the smoke clears, you look out over the now soot-covered garden. It's actually quite tranquil without the Gazebo there, though you do wish you were somewhere shady to sit.</p> <br/>
+    <% } else if(ending === "fists") { %>
+        <h1>Wait, really?</h1>
+        <p>Your funeral, I guess. Though there probably won't be enough of you left ot bury.</p> <br/>
+        <p>You put up your dukes, right for a bout of fisticuffs with the beast, but instead it swallows you whole. You do know what a Gazebo is, right?</p> <br/>
+    <% } else if(ending === "torch") { %>
+        <h1>A Stalemate!</h1>
+        <p>The Gazebo clearly fears the flame that you're weilding, but it's clever enough not to get too close. The two of you are locked in combat, each unable to overcome the other.</p> <br/>
+    <% } else if(ending === "quitter") { %>
+        <h1>Your call, I guess</h1>
+        <p>You go back home and live a safe, happy, and boring life. So you win, I guess? </p> <br/>
+    <% } %>
+
+    <% if (ending === "torch") { %>
+        <a href="/">I use the torch to cover my escape! Back to the crossroads.</a><br/>
+    <% } else { %>
+        <a href="/home">Play again?</a><br/>
+    <% } %>
+    
+    
+
+    <p>You are playing Gazort! <a href="/home">Reset game</a></p>
+</body>
+</html>
