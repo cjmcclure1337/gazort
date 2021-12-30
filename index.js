@@ -23,7 +23,16 @@ app.get('/', (req, res) => {
 }); 
 
 app.get('/reset', (req, res) => {
-    //TBD reset all variables and restart game
+    location = "crossroads";
+    fire = false;
+    met_knight = false;
+    gate_unlocked = false;
+    gate_smashed = false;
+    has_torch = false;
+    has_bow = false;
+    has_key = false;
+    has_log = false;
+    res.render("crossroads");
 }); 
 
 app.get('/about', (req, res) => {
@@ -54,7 +63,11 @@ app.get('/forest/talk', (req, res) => {
     res.render("talk", {stage:req.query.answer})
 })
 app.get('/forest/cook', (req, res) => {
-    //TBD try to roast a marshmallow and burn down the forest
+    if(req.query.stage === "cooked") {
+        has_torch = true;
+        fire = true;
+    }
+    res.render("cook", {stage:req.query.stage})
 })
 app.get('/forest', (req, res) => {
     res.render("forest", {fire, met_knight, has_torch, has_key, location});

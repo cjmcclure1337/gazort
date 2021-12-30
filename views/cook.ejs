@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    <h1>The Campfire</h1>
+    <% if (stage === "hungry") { %> 
+        <p>Sir Bearington gestures toward their supplies. You see some salmon and some mutton, along with some skewers for easy roasting.</p> <br/>
+
+    <% } else if (stage === "mutton") { %> 
+        <p>The mutton is nice and lean, and you just can't help youself. You skewer a nice thick cut and set it in the fire.</p>
+    <% } else if (stage === "salmon") { %> 
+        <p>The salmon looks surprisingly fresh considering you don't see a river nearby, but you know better than to ask where it came from. You quickly affix it to a skewer and set it in the fire.</p>
+    <% } else if (stage === "cooked") { %> 
+        <p>You notice the fire starting to spread onto the skewer, and decide it's a good time to pull it out before your meal is lost to the fire forever. As you grab the skewer, a spark flies at your hand, causing you to flinch.</p>
+        <p>Your sudden movement flicks an ember from the fire off next to the fire where it lands on some light shrubbery. It ignites quickly, and starts to spread to the surrounding area.</p>
+        <p>After a few minutes of panicked work, Sir Bearington and his squire manage to get the fire under control, but the clearing is a lot warming and ashier than it was before. You notice a stick with some fire remaining on it, and decide it might be a useful thing to add to your supplies <br/> [Acquired a Torch]</p>
+        <p>Pretty good kebab, too.</p>
+    <% } %>   
+
+
+    <% if (stage === "hungry") { %> 
+        <a href="/forest/cook/?stage=salmon">A fish kebab? Don't mind if I do.</a><br/>
+        <a href="/forest/cook/?stage=mutton">I could definitely go for some mutton right now.</a><br/>
+    <% } %>
+    <% if (stage === "salmon" || stage === "mutton") { %> 
+        <a href="/forest/cook/?stage=cooked">Now to let that cook for a moment...</a><br/>
+        <a href="/forest">On second thought, I'm not that hungry after all. I give my <%= stage %> to Sir Bearington.</a><br/>
+    <% } %>
+    <% if (stage === "cooked") { %> 
+        <a href="/forest/">Well that's awkward.</a><br/>
+    <% } %>
+
+
+
+    <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+</body>
+</html>

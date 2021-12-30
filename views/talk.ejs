@@ -18,7 +18,7 @@
         <p>Sir Bearington grumbles his aknowledgement, then mutters somethign that you (still) can't understand. The two men seem to be looking to you for a response.</p>
     <% } else if (stage === "river") { %> 
         <p>Sir Bearington smiles and pulls something out of a pouch on his belt. A remarkably hairy hand reaches toward you with a small, silver key. You take it and put it in your pocket.</p>
-        <p>The squire speaks once more: "Now that you have proven your wisdom, as well as your courage, we no longer fear for yoy in your encounter with the beast. Please, stay and rest for as long as you feel you need."</p>
+        <p>The squire speaks once more: "Now that you have proven your wisdom, as well as your courage, we no longer fear for yoy in your encounter with the beast. Please, stay and rest for as long as you feel you need." <br/> [Acquired the Garden Key]</p>
     <% } else if (stage === "dragon") { %> 
         <p>Sir Bearington shakes his head in disappointment.</p>
         <p>The squire leans toward you and whispers: "Not every problem can be solves by felling a fearsome foe, outlander. But I don't think my lord would mind giving you a second chance."</p>
@@ -31,7 +31,7 @@
         <a href="/forest/talk/?answer=dragon">"A mighty dragon!"</a><br/>
     <% } %>
     <% if (stage !== "wits" && stage !== "river") { %> 
-        <a href="/forest/talk/?answer=wits">""</a><br/>
+        <a href="/forest/talk/?answer=wits">"My wits, my courage, and my resolve!"</a><br/>
     <% } %>
     <% if (stage !== "river") { %> 
         <a href="/forest/talk/?answer=river">"..A river?"</a><br/>
