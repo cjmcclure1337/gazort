@@ -36,7 +36,7 @@ app.get('/reset', (req, res) => {
 }); 
 
 app.get('/about', (req, res) => {
-    //TBD info page
+    res.render("about")
 }); 
 
 app.get('/exit', (req, res) => {
