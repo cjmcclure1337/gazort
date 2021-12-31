@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    <h1>The Cabin</h1>
+    <p>You peer through the open doorway, but no one seem to be home. As you enter the cabin it smells of smoke and strange spices. Every space in the cabin is filled with some kind of trinket - boxes of strange sticks and baubles cover the floor, and jars of various liquids and herbs cover the shelves.</p>
+    <% if (!has_bow) { %> 
+        <p>Tucked into a corner behind a coat rack with a threadbare black cloak, you see a bow and a quiver of arrows.</p> <br/>
+    <% } %>
+
+    <% if (!has_bow) { %> 
+        <a href="/swamp/bow?answer=nothing">That bow looks useful, better take that with me.</a> <br/>
+    <% } %>
+    <% if (!has_log) { %> 
+        <a href="/swamp/sticks">Did you say sticks? Tell me more about that.</a><br/>
+    <% } %>
+    <a href="/">Yep, definitely spooky. Probably best to go back.</a><br/>
+
+    <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+</body>
+</html>

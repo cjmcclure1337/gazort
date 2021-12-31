@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    <h1>Umm, Okay</h1>
+    <% if (!has_log) { %> 
+        <p>You're the boss here, I guess.</p>
+        <p>Yes, some of the boxes have some sticks. Some are twisted, gnarled, and sharp. Others are smooth and polished. Most of them don't look like they came from any tree you're familiar with, or any tree nearby. You see a few that are barely twigs, one that's basically a log, and every size in between.</p> <br/>
+    <% } %>
+    <% if (has_log) { %> 
+        <p>You take the log and put it in your... pocket? You know what, sure, you've got a log. <br/> [Acquired Log]</p> <br/>
+    <% } %>
+
+    
+    <% if (!has_log) { %> 
+        <a href="/swamp/sticks?log=take">Wait, a LOG?! That's fantastic, I'm taking that with me for sure.</a><br/>
+        <a href="/swamp/cabin">My curiosity is sated, I go back to searching the rest of the cabin.</a><br/>
+    <% } %>
+    <% if (has_log) { %> 
+        <a href="/swamp/cabin">Nice.</a><br/>
+    <% } %>
+
+    <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+</body>
+</html>

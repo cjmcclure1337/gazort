@@ -91,8 +91,23 @@ app.get('/garden/key', (req, res) => {
     res.render("garden");
 }); 
 
+app.get('/swamp/cabin', (req, res) => {
+    res.render("cabin", {has_bow, has_log})
+}); 
+app.get('/swamp/sticks', (req, res) => {
+    if(req.query.log === "take") {
+        has_log = true; 
+    }
+    res.render("sticks", {has_log})
+}); 
+app.get('/swamp/bow', (req, res) => {
+    if(req.query.answer === "truth") {
+        has_bow = true;
+    }
+    res.render("witch", {stage: req.query.answer});
+})
 app.get('/swamp', (req, res) => {
-    //TBD swamp path
+    res.render("swamp");
 }); 
 
 

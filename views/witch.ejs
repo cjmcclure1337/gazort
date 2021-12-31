@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Gazort</title>
+</head>
+<body>
+    <h1>The Witch of the Swamp</h1>
+    <% if (stage === "nothing") { %> 
+        <p>You reach around the cloak and grab the bow. Just as you clasp it in your hand, you hear a "poof" sound behind you with a puff of smoke. You turn around a see a woman in all black with a tall, pointy hat.</p>
+        <p>"Well, well, well, what have we here?" Asks the witch. "Answer quickly, I have little patience for thieves."</p> 
+    <% } else if (stage === "fight") { %> 
+        <p>The witch looks unimpressed as you run toward her. Somehow, you don't seem to be getting any closer to you. And she seems to be getting taller. Much taller.</p>
+        <p>Eventually, your dramatic charge reaches her left boot, and you realize the rest of the cabin has gotten bigger as well. You let out a cry of protest as the witch reaches down to pick you up, but the only sound that comes out is a soft "ribbit".</p>
+        <p>She deposits you in a glass jar and says "I hope you've learned a lesson about taking other people's things. Maybe in a few hundred years I'll give you another chance at being human."  </p>
+    <% } else if (stage === "lie") { %> 
+        <p>The witch laughs. "Never heard that one before. One more chance to tell the truth."</p>
+    <% } else if (stage === "truth") { %> 
+        <p>The witch pauses thoughtfully for a moment. "The beast that's been trampling my nightshade? Now that could be useful. Of course, normal arrows don't hurt it, but I suppose you could find a way to make use of the bow." She shrugs, wishes you luck, and disappears with a puff of smoke. <br/> [Acquired Bow] </p>
+    <% } %>   
+
+    <br/>
+
+    <% if (stage === "nothing" || stage === "lie") { %> 
+        <a href="/swamp/bow/?answer=fight">Caught red-handed! I'll have to fight my way out.</a><br/>
+        <a href="/swamp/bow/?answer=truth">"Please, mighty witch! I beseech your aid against the mighty beast of the garden!"</a><br/>
+    <% } %>
+    <% if (stage === "nothing") { %> 
+        <a href="/swamp/bow/?answer=lie">"Oh, I was just, um, tidying up for you!"</a><br/>
+    <% } %>
+    <% if (stage === "truth") { %> 
+        <a href="/swamp/cabin">Such kindness! </a><br/>
+    <% } %>
+    <% if (stage === "fight") { %>
+        <a href="/reset">Play again?</a><br/>
+    <% } %>
+
+
+    <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+</body>
+</html>
