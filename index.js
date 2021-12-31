@@ -39,8 +39,11 @@ app.get('/about', (req, res) => {
     res.render("about")
 }); 
 
+app.get('/exit/quitter', (req, res) => {
+    res.render("end", {ending: "quitter"})
+}); 
 app.get('/exit', (req, res) => {
-    //TBD giving up page
+    res.render("exit")
 }); 
 
 app.get('/fight/bow', (req, res) => {
