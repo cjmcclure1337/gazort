@@ -10,11 +10,13 @@
 <body>
     <h1>The Dread Gazebo!</h1>
     <% if (loud) { %> 
-        <p>The gate gives way easily beneath the weight of your mighty log, and you burst forth triumphantly into the graden! You take a moment to enoy the sweet garden air as the echoes of your victory read around you.</p> <br/>
-        <p>As the sound of clanging metal dies out around you, and new sound starts to stir. You have awoken the Gazebo! It charges toward you, jaws gaping wide!</p> <br/>
+        <p>The gate gives way easily beneath the weight of your mighty log, and you burst forth triumphantly into the graden! You take a moment to enoy the sweet garden air as the echoes of your victory read around you.</p>
+        <p>As the sound of clanging metal dies out around you, and new sound starts to stir. You have awoken the Gazebo! It charges toward you, jaws gaping wide!</p> 
     <% } else { %>
-        <p>You were born for this moment. With a mighty roar, you charge the beast! </p> <br/>
+        <p>You were born for this moment. With a mighty roar, you charge the beast! </p> 
     <% } %>
+
+    <br/>
 
     <% if (has_bow && has_torch) { %> 
         <a href="/fight/bow">The beast may be strong, but I am smarter. I use the torch to light my arrows.</a><br/>

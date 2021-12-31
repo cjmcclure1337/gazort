@@ -10,8 +10,7 @@
 <body>
     <h1>The Campfire</h1>
     <% if (stage === "hungry") { %> 
-        <p>Sir Bearington gestures toward their supplies. You see some salmon and some mutton, along with some skewers for easy roasting.</p> <br/>
-
+        <p>Sir Bearington gestures toward their supplies. You see some salmon and some mutton, along with some skewers for easy roasting.</p> 
     <% } else if (stage === "mutton") { %> 
         <p>The mutton is nice and lean, and you just can't help youself. You skewer a nice thick cut and set it in the fire.</p>
     <% } else if (stage === "salmon") { %> 
@@ -23,6 +22,7 @@
         <p>Pretty good kebab, too.</p>
     <% } %>   
 
+    <br/>
 
     <% if (stage === "hungry") { %> 
         <a href="/forest/cook/?stage=salmon">A fish kebab? Don't mind if I do.</a><br/>

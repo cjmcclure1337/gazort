@@ -10,9 +10,9 @@
 <body>
     <h1>Campfire Conversation</h1>
     <% if (stage === "riddle") { %> 
-        <p>Sir Bearington looks alarmed and lets out an exclaimation you don't understand. He turns to his squire and continues his muttering for a moment. The squire nods solemnly, and turns back to you.</p> <br/>
-        <p>"My lord says that the beast of the garden is not one to be trifled with. He advises that you turn back from this path, as there is no glory in death"</p> <br/>
-        <p>The flame sputters as you study each other. The knight and his squire seem to notice the resolve in your eyes, though, and after a pause Sir Bearington continues.</p> <br/>
+        <p>Sir Bearington looks alarmed and lets out an exclaimation you don't understand. He turns to his squire and continues his muttering for a moment. The squire nods solemnly, and turns back to you.</p> 
+        <p>"My lord says that the beast of the garden is not one to be trifled with. He advises that you turn back from this path, as there is no glory in death"</p> 
+        <p>The flame sputters as you study each other. The knight and his squire seem to notice the resolve in your eyes, though, and after a pause Sir Bearington continues.</p> 
         <p>"Very well," the squire continues. "My lord has an article that may assist with you endeavor - a key to the garden that may allow you to approach the creature with stealth. However, he first asks that you pass a test of spirit.</p>
         <p>"What's more, in order to see more clearly into your heart and know that he is not sending you to a certain death, Sir Bearington has asked that I not intervene in your test."</p>
         <p>Sir Bearington grumbles his aknowledgement, then mutters somethign that you (still) can't understand. The two men seem to be looking to you for a response.</p>
@@ -26,6 +26,7 @@
         <p>Sir Bearington and his squire at you quizically - apparently this was not a response they were expecting. Sir Bearington repeats his indecipherable riddle, as though perhaps you misheard.</p>
     <% } %>   
 
+    <br/>
 
     <% if (stage !== "dragon" && stage !== "river") { %> 
         <a href="/forest/talk/?answer=dragon">"A mighty dragon!"</a><br/>
