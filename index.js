@@ -23,16 +23,6 @@ var LoginVerification = (req, res, next) => {
 }
 
 
-let location = "crossroads";
-let fire = false;
-let met_knight = false;
-let gate_unlocked = false;
-let gate_smashed = false;
-let has_torch = false;
-let has_bow = false;
-let has_key = false;
-let has_log = false;
-
 const users = [
     {name: "Outlander", 
     location: "crossroads",
