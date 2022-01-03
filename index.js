@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json()); // To parse the incoming requests with JSON payloads
+
+
 let location = "crossroads";
 let fire = false;
 let met_knight = false;
@@ -18,6 +22,15 @@ app.set("view engine","ejs")
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
+    res.render("index.ejs")
+}); 
+
+app.post('/signup', (req, res) => {
+    const user = req.body.username;
+    res.send(`Welcome ${user}`)
+}); 
+
+app.get('/crossraods', (req, res) => {
     res.render("crossroads");
     location = "crosroads";
 }); 
