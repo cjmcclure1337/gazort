@@ -14,6 +14,14 @@ app.use(session({
   cookie: { secure: false }
 }))
 
+var LoginVerification = (req, res, next) => {
+    if(req.session.username) {
+        next();
+    } else {
+        res.redirect("/")
+    }
+}
+
 
 let location = "crossroads";
 let fire = false;
@@ -26,9 +34,17 @@ let has_key = false;
 let has_log = false;
 
 const users = [
-    {name: "chris", password: "test"},
-    {name: "chloe", password: "test"},
-    {name: "outlander", password: "test"}
+    {name: "Outlander", 
+    location: "crossroads",
+    fire: false,
+    met_knight: false,
+    gate_unlocked: false,
+    gate_smashed: false,
+    has_torch: false,
+    has_bow: false,
+    has_key: false,
+    has_log: false
+}
 ]
 
 
@@ -41,23 +57,39 @@ app.get('/', (req, res) => {
     res.render("index", {user: session_username})
 }); 
 
-app.post('/signup', (req, res) => {
+app.post('/signin', (req, res) => {
     const username = req.body.username;
-    if(users.find(user => user.name === req.body.username && user.password === req.body.password)) {
+    if(users.find(user => user.name === req.body.username)) {
         req.session.username = username;
         res.redirect("/crossroads");
     } else {
-        req.session.destroy(() => {});
-        res.redirect("/");
+        req.session.temp = username
+        res.render("create", {name: username})
     }
 }); 
 
-app.get('/crossroads', (req, res) => {
+app.get('/signup', (req, res) => {
+    users.push({
+        name: req.session.temp,
+        fire: false,
+        met_knight: false,
+        gate_unlocked: false,
+        gate_smashed: false,
+        has_torch: false,
+        has_bow: false,
+        has_key: false,
+        has_log: false
+    })
+    req.session.username = req.session.temp;
+    res.render("crossroads", {user: req.session.username})
+})
+
+app.get('/crossroads', LoginVerification, (req, res) => {
     res.render("crossroads", {user: req.session.username});
     location = "crossroads";
 }); 
 
-app.get('/reset', (req, res) => {
+app.get('/reset', LoginVerification, (req, res) => {
     location = "crossroads";
     fire = false;
     met_knight = false;
@@ -67,88 +99,89 @@ app.get('/reset', (req, res) => {
     has_bow = false;
     has_key = false;
     has_log = false;
-    res.render("crossroads");
+    res.render("crossroads", {user: req.session.username});
 }); 
 
 app.get('/about', (req, res) => {
     res.render("about")
 }); 
 
-app.get('/exit/quitter', (req, res) => {
-    res.render("end", {ending: "quitter"})
+app.get('/exit/quitter', LoginVerification, (req, res) => {
+    res.render("end", {ending: "quitter", user: req.session.username})
 }); 
-app.get('/exit', (req, res) => {
-    res.render("exit")
+app.get('/exit', LoginVerification, (req, res) => {
+    res.render("exit",{user: req.session.username})
 }); 
 
-app.get('/fight/bow', (req, res) => {
-    res.render("end", {ending: "bow"});
+app.get('/fight/bow', LoginVerification, (req, res) => {
+    res.render("end", {ending: "bow", user: req.session.username});
 });
-app.get('/fight/fists', (req, res) => {
-    res.render("end", {ending: "fists"});
+app.get('/fight/fists', LoginVerification, (req, res) => {
+    res.render("end", {ending: "fists", user: req.session.username});
 }); 
-app.get('/fight/torch', (req, res) => {
-    res.render("end", {ending: "torch"});
+app.get('/fight/torch', LoginVerification, (req, res) => {
+    res.render("end", {ending: "torch", user: req.session.username});
 }); 
-app.get('/fight', (req, res) => {
-    res.render("fight", {has_bow, has_torch, loud:false});
+app.get('/fight', LoginVerification, (req, res) => {
+    res.render("fight", {has_bow, has_torch, loud:false, user: req.session.username});
 }); 
 
-app.get('/forest/talk', (req, res) => {
+app.get('/forest/talk', LoginVerification, (req, res) => {
     if(req.query.answer === "river") {
         has_key = true;
     }
-    res.render("talk", {stage:req.query.answer})
+    res.render("talk", {stage:req.query.answer, user: req.session.username})
 })
-app.get('/forest/cook', (req, res) => {
+app.get('/forest/cook', LoginVerification, (req, res) => {
     if(req.query.stage === "cooked") {
         has_torch = true;
         fire = true;
     }
-    res.render("cook", {stage:req.query.stage})
+    res.render("cook", {stage:req.query.stage, user: req.session.username})
 })
-app.get('/forest', (req, res) => {
-    res.render("forest", {fire, met_knight, has_torch, has_key, location});
+app.get('/forest', LoginVerification, (req, res) => {
+    res.render("forest", {fire, met_knight, has_torch, has_key, location, user: req.session.username});
     location = "forest";
     met_knight = true;
 })
 
 
 
-app.get('/gate', (req, res) => {
-    res.render("gate", {has_log, has_key, gate_unlocked, gate_smashed});
+app.get('/gate', LoginVerification, (req, res) => {
+    res.render("gate", {has_log, has_key, gate_unlocked, gate_smashed, user: req.session.username});
     location = "garden";
 }); 
 
-app.get('/garden/smash', (req, res) => {
+app.get('/garden/smash', LoginVerification, (req, res) => {
     gate_smashed = true;
-    res.render("fight", {has_bow, has_torch, loud:true});
+    res.render("fight", {has_bow, has_torch, loud:true, user: req.session.username});
 }); 
-app.get('/garden/key', (req, res) => {
+app.get('/garden/key', LoginVerification, (req, res) => {
     gate_unlocked = true;
-    res.render("garden");
+    res.render("garden", {user: req.session.username});
 }); 
 
-app.get('/swamp/cabin', (req, res) => {
-    res.render("cabin", {has_bow, has_log})
+app.get('/swamp/cabin', LoginVerification, (req, res) => {
+    res.render("cabin", {has_bow, has_log, user: req.session.username})
 }); 
-app.get('/swamp/sticks', (req, res) => {
+app.get('/swamp/sticks', LoginVerification, (req, res) => {
     if(req.query.log === "take") {
         has_log = true; 
     }
-    res.render("sticks", {has_log})
+    res.render("sticks", {has_log, user: req.session.username})
 }); 
-app.get('/swamp/bow', (req, res) => {
+app.get('/swamp/bow', LoginVerification, (req, res) => {
     if(req.query.answer === "truth") {
         has_bow = true;
     }
-    res.render("witch", {stage: req.query.answer});
+    res.render("witch", {stage: req.query.answer, user: req.session.username});
 })
-app.get('/swamp', (req, res) => {
-    res.render("swamp");
+app.get('/swamp', LoginVerification, (req, res) => {
+    res.render("swamp", {user: req.session.username});
 }); 
 
 
 app.listen(port, () => {
 console.log(`Example app listening at http://localhost:${port}`);
 });
+
