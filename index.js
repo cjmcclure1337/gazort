@@ -5,6 +5,14 @@ const port = process.env.PORT || 8080;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()); // To parse the incoming requests with JSON payloads
 
+var session = require('express-session');
+app.use(session({
+  secret: 'excelsior',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
 
 let location = "crossroads";
 let fire = false;
@@ -22,12 +30,14 @@ app.set("view engine","ejs")
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    res.render("index.ejs")
+    const session_username = req.session.username;
+    res.render("index", {user: session_username})
 }); 
 
 app.post('/signup', (req, res) => {
     const user = req.body.username;
-    res.send(`Welcome ${user}`)
+    req.session.username = user;
+    res.send(`Welcome ${req.session.username}`)
 }); 
 
 app.get('/crossraods', (req, res) => {
