@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
+var session = require('express-session');
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()); // To parse the incoming requests with JSON payloads
 
-var session = require('express-session');
+
 app.use(session({
   secret: 'excelsior',
   resave: false,
@@ -24,25 +25,36 @@ let has_bow = false;
 let has_key = false;
 let has_log = false;
 
+const users = [
+    {name: "chris", password: "test"},
+    {name: "chloe", password: "test"},
+    {name: "outlander", password: "test"}
+]
+
 
 app.set("view engine","ejs")
 
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    const session_username = req.session.username;
+    const session_username = req.session.username ? req.session.username : "user not found";
     res.render("index", {user: session_username})
 }); 
 
 app.post('/signup', (req, res) => {
-    const user = req.body.username;
-    req.session.username = user;
-    res.send(`Welcome ${req.session.username}`)
+    const username = req.body.username;
+    if(users.find(user => user.name === req.body.username && user.password === req.body.password)) {
+        req.session.username = username;
+        res.redirect("/crossroads");
+    } else {
+        req.session.destroy(() => {});
+        res.redirect("/");
+    }
 }); 
 
-app.get('/crossraods', (req, res) => {
-    res.render("crossroads");
-    location = "crosroads";
+app.get('/crossroads', (req, res) => {
+    res.render("crossroads", {user: req.session.username});
+    location = "crossroads";
 }); 
 
 app.get('/reset', (req, res) => {
