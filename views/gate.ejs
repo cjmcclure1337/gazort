@@ -19,7 +19,7 @@
 
     <br/>
 
-    <a href="/">I return to the crossroads.</a><br/>
+    <a href="/crossroads">I return to the crossroads.</a><br/>
 
     <% if (has_log && !gate_smashed && !gate_unlocked) { %> 
         <a href="/garden/smash">This gate is no match for my log! I smash through the gate.</a><br/>
@@ -35,5 +35,6 @@
     
 
     <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+    <p>Logged in as: <%= user %></p>
 </body>
 </html>

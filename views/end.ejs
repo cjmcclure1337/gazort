@@ -28,7 +28,7 @@
     <br/>
 
     <% if (ending === "torch") { %>
-        <a href="/">I use the torch to cover my escape! Back to the crossroads.</a><br/>
+        <a href="/crossroads">I use the torch to cover my escape! Back to the crossroads.</a><br/>
     <% } else { %>
         <a href="/reset">Play again?</a><br/>
     <% } %>
@@ -36,5 +36,6 @@
     
 
     <p>You are playing Gazort! <a href="/reset">Reset game</a></p>
+    <p>Logged in as: <%= user %></p>
 </body>
 </html>

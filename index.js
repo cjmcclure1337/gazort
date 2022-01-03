@@ -1,16 +1,41 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
+var session = require('express-session');
 
-let location = "crossroads";
-let fire = false;
-let met_knight = false;
-let gate_unlocked = false;
-let gate_smashed = false;
-let has_torch = false;
-let has_bow = false;
-let has_key = false;
-let has_log = false;
+app.use(express.urlencoded({extended: true}));
+app.use(express.json()); // To parse the incoming requests with JSON payloads
+
+
+app.use(session({
+  secret: 'excelsior',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
+var LoginVerification = (req, res, next) => {
+    if(req.session.username) {
+        next();
+    } else {
+        res.redirect("/")
+    }
+}
+
+
+const users = [
+    {name: "Outlander", 
+    location: "crossroads",
+    fire: false,
+    met_knight: false,
+    gate_unlocked: false,
+    gate_smashed: false,
+    has_torch: false,
+    has_bow: false,
+    has_key: false,
+    has_log: false
+}
+]
 
 
 app.set("view engine","ejs")
@@ -18,102 +43,147 @@ app.set("view engine","ejs")
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    res.render("crossroads");
-    location = "crosroads";
+    const session_username = req.session.username ? req.session.username : "user not found";
+    res.render("index", {user: session_username})
 }); 
 
-app.get('/reset', (req, res) => {
-    location = "crossroads";
-    fire = false;
-    met_knight = false;
-    gate_unlocked = false;
-    gate_smashed = false;
-    has_torch = false;
-    has_bow = false;
-    has_key = false;
-    has_log = false;
-    res.render("crossroads");
+app.post('/signin', (req, res) => {
+    const username = req.body.username;
+    if(users.find(user => user.name === req.body.username)) {
+        req.session.username = username;
+        res.redirect("/crossroads");
+    } else {
+        req.session.temp = username
+        res.render("create", {name: username})
+    }
+}); 
+
+app.get('/signup', (req, res) => {
+    users.push({
+        name: req.session.temp,
+        fire: false,
+        met_knight: false,
+        gate_unlocked: false,
+        gate_smashed: false,
+        has_torch: false,
+        has_bow: false,
+        has_key: false,
+        has_log: false
+    })
+    req.session.username = req.session.temp;
+    res.render("crossroads", {user: req.session.username})
+})
+
+app.get('/crossroads', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username)
+    res.render("crossroads", {user: req.session.username});
+    users[userID].location = "crossroads";
+}); 
+
+app.get('/reset', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username)
+    users[userID].location = "crossroads";
+    users[userID].fire = false;
+    users[userID].met_knight = false;
+    users[userID].gate_unlocked = false;
+    users[userID].gate_smashed = false;
+    users[userID].has_torch = false;
+    users[userID].has_bow = false;
+    users[userID].has_key = false;
+    users[userID].has_log = false;
+    res.render("crossroads", {user: req.session.username});
 }); 
 
 app.get('/about', (req, res) => {
     res.render("about")
 }); 
 
-app.get('/exit/quitter', (req, res) => {
-    res.render("end", {ending: "quitter"})
+app.get('/exit/quitter', LoginVerification, (req, res) => {
+    res.render("end", {ending: "quitter", user: req.session.username})
 }); 
-app.get('/exit', (req, res) => {
-    res.render("exit")
+app.get('/exit', LoginVerification, (req, res) => {
+    res.render("exit",{user: req.session.username})
 }); 
 
-app.get('/fight/bow', (req, res) => {
-    res.render("end", {ending: "bow"});
+app.get('/fight/bow', LoginVerification, (req, res) => {
+    res.render("end", {ending: "bow", user: req.session.username});
 });
-app.get('/fight/fists', (req, res) => {
-    res.render("end", {ending: "fists"});
+app.get('/fight/fists', LoginVerification, (req, res) => {
+    res.render("end", {ending: "fists", user: req.session.username});
 }); 
-app.get('/fight/torch', (req, res) => {
-    res.render("end", {ending: "torch"});
+app.get('/fight/torch', LoginVerification, (req, res) => {
+    res.render("end", {ending: "torch", user: req.session.username});
 }); 
-app.get('/fight', (req, res) => {
-    res.render("fight", {has_bow, has_torch, loud:false});
+app.get('/fight', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
+    res.render("fight", {has_bow: users[userID].has_bow, has_torch: users[userID].has_torch, loud:false, user: req.session.username});
 }); 
 
-app.get('/forest/talk', (req, res) => {
+app.get('/forest/talk', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
     if(req.query.answer === "river") {
-        has_key = true;
+        users[userID].has_key = true;
     }
-    res.render("talk", {stage:req.query.answer})
+    res.render("talk", {stage:req.query.answer, user: req.session.username})
 })
-app.get('/forest/cook', (req, res) => {
+app.get('/forest/cook', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
     if(req.query.stage === "cooked") {
-        has_torch = true;
-        fire = true;
+        users[userID].has_torch = true;
+        users[userID].fire = true;
     }
-    res.render("cook", {stage:req.query.stage})
+    res.render("cook", {stage:req.query.stage, user: req.session.username})
 })
-app.get('/forest', (req, res) => {
-    res.render("forest", {fire, met_knight, has_torch, has_key, location});
-    location = "forest";
-    met_knight = true;
+app.get('/forest', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
+    res.render("forest", {fire: users[userID].fire, met_knight: users[userID].metKnight, has_torch: users[userID].has_torch, has_key: users[userID].has_key, location: users[userID].location, user: req.session.username});
+    users[userID].location = "forest";
+    users[userID].met_knight = true;
 })
 
 
 
-app.get('/gate', (req, res) => {
-    res.render("gate", {has_log, has_key, gate_unlocked, gate_smashed});
-    location = "garden";
+app.get('/gate', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
+    res.render("gate", {has_log: users[userID].has_log, has_key: users[userID].has_key, gate_unlocked: users[userID].gate_unlocked, gate_smashed: users[userID].gate_smashed, user: req.session.username});
+    users[userID].location = "garden";
 }); 
 
-app.get('/garden/smash', (req, res) => {
-    gate_smashed = true;
-    res.render("fight", {has_bow, has_torch, loud:true});
+app.get('/garden/smash', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
+    users[userID].gate_smashed = true;
+    res.render("fight", {has_bow: users[userID].has_bow, has_torch: users[userID].has_torch, loud:true, user: req.session.username});
 }); 
-app.get('/garden/key', (req, res) => {
-    gate_unlocked = true;
-    res.render("garden");
+app.get('/garden/key', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
+    users[userID].gate_unlocked = true;
+    res.render("garden", {user: req.session.username});
 }); 
 
-app.get('/swamp/cabin', (req, res) => {
-    res.render("cabin", {has_bow, has_log})
+app.get('/swamp/cabin', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
+    res.render("cabin", {has_bow: users[userID].has_bow, has_log: users[userID].has_log, user: req.session.username})
 }); 
-app.get('/swamp/sticks', (req, res) => {
+app.get('/swamp/sticks', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
     if(req.query.log === "take") {
-        has_log = true; 
+        users[userID].has_log = true; 
     }
-    res.render("sticks", {has_log})
+    res.render("sticks", {has_log: users[userID].has_log, user: req.session.username})
 }); 
-app.get('/swamp/bow', (req, res) => {
+app.get('/swamp/bow', LoginVerification, (req, res) => {
+    const userID = users.findIndex((user) => user.name === req.session.username);
     if(req.query.answer === "truth") {
-        has_bow = true;
+        users[userID].has_bow = true;
     }
-    res.render("witch", {stage: req.query.answer});
+    res.render("witch", {stage: req.query.answer, user: req.session.username});
 })
-app.get('/swamp', (req, res) => {
-    res.render("swamp");
+app.get('/swamp', LoginVerification, (req, res) => {
+    res.render("swamp", {user: req.session.username});
 }); 
 
 
 app.listen(port, () => {
 console.log(`Example app listening at http://localhost:${port}`);
 });
+
