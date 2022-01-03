@@ -37,6 +37,8 @@ const users = [
 }
 ]
 
+const winners = ["Outlander", "Zanchin"];
+
 
 app.set("view engine","ejs")
 
@@ -95,7 +97,7 @@ app.get('/reset', LoginVerification, (req, res) => {
 }); 
 
 app.get('/about', (req, res) => {
-    res.render("about")
+    res.render("about", {winners})
 }); 
 
 app.get('/exit/quitter', LoginVerification, (req, res) => {
@@ -106,6 +108,7 @@ app.get('/exit', LoginVerification, (req, res) => {
 }); 
 
 app.get('/fight/bow', LoginVerification, (req, res) => {
+    winners.push(req.session.username);
     res.render("end", {ending: "bow", user: req.session.username});
 });
 app.get('/fight/fists', LoginVerification, (req, res) => {
